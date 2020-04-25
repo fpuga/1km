@@ -23,4 +23,7 @@ node_modules/
 
 
 # Project
+.env
 
+# Local Netlify folder
+.netlify

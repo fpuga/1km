@@ -1,12 +1,8 @@
 (function() {
-    const mapOptions = {
+    const map = L.map("mapid", {
         center: [40.2, -3.6],
         zoom: 6,
-    };
-
-    let map = L.map("mapid", mapOptions);
-
-    let marker, poly;
+    });
 
     const lc = L.control
         .locate({
@@ -29,32 +25,12 @@
         crossOrigin: true,
     };
 
-    const pnoaOrthoWMS = L.tileLayer
-        .wms("http://www.ign.es/wms-inspire/pnoa-ma?", wmsOptions)
-        .addTo(map);
-
-    L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
-        {
-            maxZoom: 18,
-            attribution:
-                'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            id: "mapbox/streets-v11",
-            tileSize: 512,
-            zoomOffset: -1,
-        }
-    ); //.addTo(map);
-
-    var options = {steps: 64, units: "kilometers"};
+    L.tileLayer.wms("http://www.ign.es/wms-inspire/pnoa-ma?", wmsOptions).addTo(map);
 
     const removeOverlay = () => {
         marker && marker.remove();
         poly && poly.remove();
     };
-
-    const isoc = document.getElementById("isocrona");
 
     const drawOverlay = e => {
         const calcMethod = isoc.checked ? isochroneCoordinates : bufferCoordinates;
@@ -64,24 +40,22 @@
     };
 
     const isochroneCoordinates = e => {
-        const key = "Ap8yVBeoBXr-d_ZAhOiM6WT1BzOB1liVnAXxgXNny9jt9VJkHMz1hG59qzLB5BsX";
-        const url = `https://dev.virtualearth.net/REST/v1/Routes/Isochrones?waypoint=${e.latlng.lat},${e.latlng.lng}&maxDistance=1&travelMode=walking&optimize=distance&key=${key}`;
-        return fetch(url)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                const coords =
-                    data.resourceSets[0].resources[0].polygons[0].coordinates;
-                console.log(coords);
-                return coords;
-            });
+        const baseUrl = "https://tender-raman-6085e5.netlify.app";
+        const pathURL = `/.netlify/functions/isochrone_api?lat=${e.latlng.lat}&lng=${e.latlng.lng}`;
+        const url = baseUrl + pathURL;
+        return fetch(url).then(response => response.json());
     };
 
     const bufferCoordinates = e => {
-        const circle = turf.circle([e.latlng.lat, e.latlng.lng], 1, options);
+        const circle = turf.circle([e.latlng.lat, e.latlng.lng], 1, {
+            steps: 64,
+            units: "kilometers",
+        });
         return Promise.resolve(circle.geometry.coordinates);
     };
+
+    const isoc = document.getElementById("isocrona");
+    let marker, poly;
 
     map.on("click", e => {
         lc.stop();
