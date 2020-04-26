@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 
 const key = process.env.API_SECRET_BING;
+const accepted_origin = process.env.ACCEPTED_ORIGIN;
 
 exports.handler = async (event, context) => {
     try {
@@ -23,11 +24,15 @@ exports.handler = async (event, context) => {
 
         return fetch(url, {headers: {Accept: "application/json"}})
             .then(response => {
-                console.log(response);
                 return response.json();
             })
             .then(data => ({
                 statusCode: 200,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": accepted_origin,
+                    "Access-Control-Allow-Credentials": true,
+                },
                 body: JSON.stringify(
                     data.resourceSets[0].resources[0].polygons[0].coordinates
                 ),
