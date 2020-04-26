@@ -43,7 +43,7 @@ let map;
         crossOrigin: true,
     };
 
-    L.tileLayer.wms("https://www.ign.es/wmts/ign-base?", wmsOptions).addTo(map);
+    L.tileLayer.wms("https://www.ign.es/wms-inspire/ign-base?", wmsOptions).addTo(map);
 
     const removeOverlay = () => {
         marker && marker.remove();
