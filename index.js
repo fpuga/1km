@@ -17,26 +17,59 @@ let map;
         })
         .addTo(map);
 
-    // const wmsOptions = {
-    //     format: "image/png",
-    //     transparent: true,
-    //     version: "1.3.0",
-    //     tileSize: 512,
-    //     layers: "OI.OrthoimageCoverage",
-    //     attribution:
-    //         'PNOA cedido por © <a href="http://www.ign.es/ign/main/index.do" target="_blank">Instituto Geográfico Nacional de España</a>',
-    //     opacity: 1,
-    //     crossOrigin: true,
-    // };
-    //
-    // L.tileLayer.wms("https://www.ign.es/wms-inspire/pnoa-ma?", wmsOptions).addTo(map);
-    //
+    const controlTR = document.querySelector(".leaflet-top.leaflet-right");
+    controlTR.insertAdjacentHTML(
+        "afterBegin",
+        `<div class="leaflet-control leaflet-bar"><a href="#" id="modal-btn" class="leaflet-bar-part leaflet-bar-part-single"><i class="fa fa-question-circle"></i></a></div>`
+    );
+
+    let modalBtn = document.getElementById("modal-btn");
+    let modal = document.querySelector(".modal");
+    let closeBtn = document.querySelector(".close-btn");
+    let salirBtn = document.querySelector(".salir");
+    let continuarBtn = document.querySelector(".continuar");
+
+    const modalAccepted = () => {};
+    modalBtn.onclick = function(e) {
+        e.preventDefault();
+        modal.style.display = "block";
+    };
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+        lc.stop();
+        localStorage.clear();
+    };
+    salirBtn.onclick = function() {
+        modal.style.display = "none";
+        lc.stop();
+        localStorage.clear();
+    };
+    continuarBtn.onclick = function() {
+        modal.style.display = "none";
+        localStorage.setItem("privacidadaceptada", "True");
+        lc.stop();
+        lc.start();
+    };
+    window.onclick = function(e) {
+        if (e.target == modal) {
+            modal.style.display = "none";
+            lc.stop();
+            localStorage.clear();
+        }
+    };
+
+    if (!localStorage.getItem("privacidadaceptada")) {
+        modalBtn.click();
+    } else {
+        lc.start();
+    }
+
     const wmsOptions = {
         format: "image/png",
         transparent: true,
         version: "1.3.0",
         tileSize: 512,
-        layers: "IGNBaseOrto",
+        layers: "IGNBaseTodo",
         attribution:
             'PNOA cedido por © <a href="http://www.ign.es/ign/main/index.do" target="_blank">Instituto Geográfico Nacional de España</a>',
         opacity: 1,
@@ -114,10 +147,10 @@ let map;
 
     let marker, polyBuf, polyIso;
 
-    map.on("click", e => {
-        lc.stop();
-        drawOverlay(e);
-    });
+    // map.on("click", e => {
+    //     lc.stop();
+    //     drawOverlay(e);
+    // });
 
     map.on("locationfound", e => {
         drawOverlay(e);

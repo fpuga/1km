@@ -32,22 +32,110 @@
       charset="utf-8"
     ></script>
 
+    <script>
+      var clicky_site_ids = clicky_site_ids || [];
+      clicky_site_ids.push(101250782);
+    </script>
+    <script async src="//static.getclicky.com/js"></script>
+
     <style>
-            body {
-                margin: 0;
-                padding: 0;
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #mapid {
+            height: 100%;
+            width: 100%;
+        }
+
+        .modal {
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            height: 100%;
+            left: 0;
+            padding-top: 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-animation-name: animatetop;
+            animation-name: animatetop;
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            position: relative;
+            width: 75%;
+        }
+
+        .close-btn {
+            color: lightgray;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            color: darkgray;
+        }
+
+        @-webkit-keyframes animatetop {
+            from {
+                opacity: 0;
+                top: -300px;
             }
 
-            html,
-            body,
-            #mapid {
-                height: 100%;
-                width: 100%;
+            to {
+                opacity: 1;
+                top: 0;
             }
+        }
+
+        @keyframes animatetop {
+            from {
+                opacity: 0;
+                top: -300px;
+            }
+
+            to {
+                opacity: 1;
+                top: 0;
+            }
+        }
     </style>
   </head>
   <body>
     <!-- <input type="checkbox" id="isocrona" name="isocrona" style="margin-top: 1em;">Calcular como isocrona</input> -->
+
+    <div class="modal">
+      <!-- https://medium.com/@nerdplusdog/a-how-to-guide-for-modal-boxes-with-javascript-html-and-css-6a49d063987e -->
+
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h1>¿Hasta donde puedo llegar en el paseo?</h1>
+        <h2>Un proyecto libre y no lucrativo de <a href="http://conocimientoabierto.e">Francisco Puga</a> inspirado por el trabajo previo de <a href="https://1km.geomatico.es/">Geomático</a></a></h2>
+        <p>Esta aplicación permite ver sobre un mapa cuando es un kilómetro a partir de tu ubicación actual si pudieras ir en línea recta (_buffer_) o teniendo en cuenta por donde puedes caminar (_isodistancia_)</p>
+        <p>Pulsando en continuar el navegador intentará geolocalizarte, debes aceptar los permisos que te solicita. Navegando sobre el mapa pulsando en Continuar estarás aceptando las _cookies_ de la página.</p>
+        <p>Si cancelas y en algún momento quieres aceptar las condiciones pulsa sobre <span class="fa-map-marker fa"></span></p>
+        <p>Puedes borrar la información del navegador desde las opciones de privacidad del mismo o pulsando en el botón <i class="fa fa-question-circle"></i> para volver a abrir esta ventana</li>
+
+        <p><a href="/about.html">Saber más</a> sobre el proyecto, y la política de privacidad. <a href="https://github.com/fpuga/1km/">Ver el código fuente</a> de la aplicación</p>
+
+        <p><button class="salir">Salir</button><button class="continuar">Continuar</button>
+
+      </div>
+    </div>
+
+
+
     <div id="mapid"></div>
     <script src="index.js"></script>
   </body>
