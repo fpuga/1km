@@ -46,7 +46,7 @@ let map;
     };
     continuarBtn.onclick = function() {
         modal.classList.remove("active");
-        localStorage.setItem("privacidadaceptada", "True");
+        localStorage.setItem("privacidadaceptada", "2.0");
         lc.stop();
         lc.start();
     };
@@ -58,11 +58,17 @@ let map;
         }
     };
 
-    if (!localStorage.getItem("privacidadaceptada")) {
+    const privacyVersion = localStorage.getItem("privacidadaceptada");
+    if (!privacyVersion || privacyVersion != "2.0") {
         modalBtn.click();
     } else {
         lc.start();
     }
+
+    // L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    //     attribution:
+    //         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    // }).addTo(map);
 
     const wmsOptions = {
         format: "image/png",
@@ -129,11 +135,14 @@ let map;
     };
 
     const bufferCoordinates = pos => {
-        const circle = turf.circle(pos, 1, {
-            steps: 64,
+        // leaflet uses latlng. turf/geojson uses lnglat
+        const p = turf.point([pos[1], pos[0]]);
+        let circle = turf.circle(p, 1, {
+            steps: 100,
             units: "kilometers",
         });
-        return Promise.resolve(circle.geometry.coordinates);
+        circle = turf.flip(circle);
+        return Promise.resolve(turf.getCoords(circle));
     };
 
     const isochroneFromStore = pos => {
