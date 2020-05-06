@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>¿Hasta donde puedo pallegar en el paseo?</title>
+    <title>¿Hasta donde puedo pasear?</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="author" content="Francisco Puga" />
+    <meta
+      name="description"
+      content="¿Hasta donde puedo pasear? permite visualizar cuando es un kilómetro sobre un mapa"
+    />
 
     <link
       rel="stylesheet"
@@ -42,15 +48,20 @@
     <script async src="//static.getclicky.com/js"></script>
 
     <style>
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+            }
+
             body {
                 margin: 0;
                 padding: 0;
             }
 
-            html,
-            body,
             #mapid {
                 height: 100%;
+                position: absolute !important;
                 width: 100%;
             }
 
@@ -68,47 +79,108 @@
                 padding: 0 0.7rem;
             }
 
+            header {
+                display: block;
+                height: 30px !important;
+                margin: 0 auto;
+                max-width: 100%;
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+            }
+
+            .main {
+                bottom: 5px;
+                position: absolute;
+                top: 30px;
+                width: 100%;
+            }
+
     </style>
   </head>
   <body>
     <!-- <input type="checkbox" id="isocrona" name="isocrona" style="margin-top: 1em;">Calcular como isocrona</input> -->
+
+    <header>
+      <div class="navbar">
+      <section class="navbar-section"></section>
+      <section class="navbar-center">
+        <span class="navbar-brand">¿Hasta donde puedo pasear?</span>
+      </section>
+      <section class="navbar-section"></section>
+    </div>
+    </header>
+
+    <div class="main">
+      <div id="mapid"></div>
+    </div>
 
     <div class="modal" id="modal-id">
       <div class="modal-container">
         <div class="modal-header">
           <span class="btn btn-clear float-right close-btn" aria-label="Close"></span>
 
-          <div class="modal-title h5">¿Hasta donde puedo llegar en el paseo?</div>
+          <div class="modal-title h5">¿Hasta donde puedo pasear?</div>
         </div>
-      <div class="modal-body">
-        <div class="content">
-          <p><strong>Un proyecto libre y no lucrativo de <a href="http://conocimientoabierto.es">Francisco Puga</a> inspirado por el trabajo previo de <a href="https://1km.geomatico.es/">Geomático</a></strong></p>
-          <p>Esta aplicación permite ver sobre un mapa cuando es un kilómetro a partir de tu ubicación actual si pudieras ir en línea recta (<em>buffer</em>) o teniendo en cuenta por donde puedes caminar (<em>isodistancia</em>)</p>
-          <p>Pulsando en continuar el navegador intentará geolocalizarte, debes aceptar los permisos que te solicita. Navegando sobre el mapa pulsando en Continuar estarás aceptando las <em>cookies</em> de la página.</p>
-          <p>Si cancelas y en algún momento quieres aceptar las condiciones pulsa sobre <span class="fa-map-marker fa"></span></p>
-          <p>Puedes borrar la información del navegador desde las opciones de privacidad del mismo o pulsando en el botón <i class="fa fa-question-circle"></i> para volver a abrir esta ventana</li>
+        <div class="modal-body">
+          <div class="content">
+            <p>
+              <strong>
+                Un proyecto libre y no lucrativo de
+                <a href="http://conocimientoabierto.es">Francisco Puga</a>
+                inspirado por el trabajo previo de
+                <a href="https://1km.geomatico.es/">Geomático</a>
+              </strong>
+            </p>
+            <p>
+              Esta aplicación permite ver sobre un mapa cuando es un kilómetro a partir de tu
+              ubicación actual si pudieras ir en línea recta (
+              <em>buffer</em>
+              ) o teniendo en cuenta por donde puedes caminar (
+              <em>isodistancia</em>
+              )
+            </p>
+            <p>
+              Pulsando en continuar el navegador intentará geolocalizarte, debes aceptar los
+              permisos que te solicita. Navegando sobre el mapa pulsando en Continuar estarás
+              aceptando las
+              <em>cookies</em>
+              de la página.
+            </p>
+            <p>
+              Si cancelas y en algún momento quieres aceptar las condiciones pulsa sobre
+              <span class="fa-map-marker fa"></span>
+            </p>
+            <p>
+              Puedes borrar la información del navegador desde las opciones de privacidad del mismo
+              o pulsando en el botón
+              <i class="fa fa-question-circle"></i>
+              para volver a abrir esta ventana
+            </p>
 
-          <p><a href="/about.html">Saber más</a> sobre el proyecto, y la política de privacidad. <a href="https://github.com/fpuga/1km/">Ver el código fuente</a> de la aplicación</p>
-
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="container">
-          <div class="columns">
-            <div class="column col-6"><button class="salir btn btn-error btn-block mx-1">Salir</button></div>
-            <div class="column col-6"><button class="continuar btn btn-success btn-block mx-1">Continuar</button></div>
-
+            <p>
+              <a href="/about.html">Saber más</a>
+              sobre el proyecto, y la política de privacidad.
+              <a href="https://github.com/fpuga/1km/">Ver el código fuente</a>
+              de la aplicación
+            </p>
           </div>
         </div>
-
+        <div class="modal-footer">
+          <div class="container">
+            <div class="columns">
+              <div class="column col-6">
+                <button class="salir btn btn-error btn-block mx-1">Salir</button>
+              </div>
+              <div class="column col-6">
+                <button class="continuar btn btn-success btn-block mx-1">Continuar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
 
-
-
-    <div id="mapid"></div>
     <script src="index.js"></script>
   </body>
 </html>
