@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>¿Hasta donde puedo llegar en el paseo?</title>
+    <title>¿Hasta donde puedo pallegar en el paseo?</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,9 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -39,99 +42,68 @@
     <script async src="//static.getclicky.com/js"></script>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body,
-        #mapid {
-            height: 100%;
-            width: 100%;
-        }
-
-        .modal {
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            height: 100%;
-            left: 0;
-            padding-top: 50px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 9999;
-        }
-
-        .modal-content {
-            -webkit-animation-duration: 0.4s;
-            animation-duration: 0.4s;
-            -webkit-animation-name: animatetop;
-            animation-name: animatetop;
-            background-color: white;
-            margin: auto;
-            padding: 20px;
-            position: relative;
-            width: 75%;
-        }
-
-        .close-btn {
-            color: lightgray;
-            float: right;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .close-btn:hover {
-            color: darkgray;
-        }
-
-        @-webkit-keyframes animatetop {
-            from {
-                opacity: 0;
-                top: -300px;
+            body {
+                margin: 0;
+                padding: 0;
             }
 
-            to {
-                opacity: 1;
-                top: 0;
-            }
-        }
-
-        @keyframes animatetop {
-            from {
-                opacity: 0;
-                top: -300px;
+            html,
+            body,
+            #mapid {
+                height: 100%;
+                width: 100%;
             }
 
-            to {
-                opacity: 1;
-                top: 0;
+            .modal.active {
+                z-index: 9000;
             }
-        }
+
+            .modal-container .modal-footer,
+            .modal-container .modal-body,
+            .modal-container .modal-header {
+                padding: 0.7rem;
+            }
+
+            .modal-container {
+                padding: 0 0.7rem;
+            }
+
     </style>
   </head>
   <body>
     <!-- <input type="checkbox" id="isocrona" name="isocrona" style="margin-top: 1em;">Calcular como isocrona</input> -->
 
-    <div class="modal">
-      <!-- https://medium.com/@nerdplusdog/a-how-to-guide-for-modal-boxes-with-javascript-html-and-css-6a49d063987e -->
+    <div class="modal" id="modal-id">
+      <div class="modal-container">
+        <div class="modal-header">
+          <span class="btn btn-clear float-right close-btn" aria-label="Close"></span>
 
-      <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h1>¿Hasta donde puedo llegar en el paseo?</h1>
-        <h2>Un proyecto libre y no lucrativo de <a href="http://conocimientoabierto.e">Francisco Puga</a> inspirado por el trabajo previo de <a href="https://1km.geomatico.es/">Geomático</a></a></h2>
-        <p>Esta aplicación permite ver sobre un mapa cuando es un kilómetro a partir de tu ubicación actual si pudieras ir en línea recta (_buffer_) o teniendo en cuenta por donde puedes caminar (_isodistancia_)</p>
-        <p>Pulsando en continuar el navegador intentará geolocalizarte, debes aceptar los permisos que te solicita. Navegando sobre el mapa pulsando en Continuar estarás aceptando las _cookies_ de la página.</p>
-        <p>Si cancelas y en algún momento quieres aceptar las condiciones pulsa sobre <span class="fa-map-marker fa"></span></p>
-        <p>Puedes borrar la información del navegador desde las opciones de privacidad del mismo o pulsando en el botón <i class="fa fa-question-circle"></i> para volver a abrir esta ventana</li>
+          <div class="modal-title h5">¿Hasta donde puedo llegar en el paseo?</div>
+        </div>
+      <div class="modal-body">
+        <div class="content">
+          <p><strong>Un proyecto libre y no lucrativo de <a href="http://conocimientoabierto.es">Francisco Puga</a> inspirado por el trabajo previo de <a href="https://1km.geomatico.es/">Geomático</a></strong></p>
+          <p>Esta aplicación permite ver sobre un mapa cuando es un kilómetro a partir de tu ubicación actual si pudieras ir en línea recta (<em>buffer</em>) o teniendo en cuenta por donde puedes caminar (<em>isodistancia</em>)</p>
+          <p>Pulsando en continuar el navegador intentará geolocalizarte, debes aceptar los permisos que te solicita. Navegando sobre el mapa pulsando en Continuar estarás aceptando las <em>cookies</em> de la página.</p>
+          <p>Si cancelas y en algún momento quieres aceptar las condiciones pulsa sobre <span class="fa-map-marker fa"></span></p>
+          <p>Puedes borrar la información del navegador desde las opciones de privacidad del mismo o pulsando en el botón <i class="fa fa-question-circle"></i> para volver a abrir esta ventana</li>
 
-        <p><a href="/about.html">Saber más</a> sobre el proyecto, y la política de privacidad. <a href="https://github.com/fpuga/1km/">Ver el código fuente</a> de la aplicación</p>
+          <p><a href="/about.html">Saber más</a> sobre el proyecto, y la política de privacidad. <a href="https://github.com/fpuga/1km/">Ver el código fuente</a> de la aplicación</p>
 
-        <p><button class="salir">Salir</button><button class="continuar">Continuar</button>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="container">
+          <div class="columns">
+            <div class="column col-6"><button class="salir btn btn-error btn-block mx-1">Salir</button></div>
+            <div class="column col-6"><button class="continuar btn btn-success btn-block mx-1">Continuar</button></div>
+
+          </div>
+        </div>
 
       </div>
+    </div>
     </div>
 
 

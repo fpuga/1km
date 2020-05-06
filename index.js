@@ -32,27 +32,27 @@ let map;
     const modalAccepted = () => {};
     modalBtn.onclick = function(e) {
         e.preventDefault();
-        modal.style.display = "block";
+        modal.classList.add("active");
     };
     closeBtn.onclick = function() {
-        modal.style.display = "none";
+        modal.classList.remove("active");
         lc.stop();
         localStorage.clear();
     };
     salirBtn.onclick = function() {
-        modal.style.display = "none";
+        modal.classList.remove("active");
         lc.stop();
         localStorage.clear();
     };
     continuarBtn.onclick = function() {
-        modal.style.display = "none";
+        modal.classList.remove("active");
         localStorage.setItem("privacidadaceptada", "True");
         lc.stop();
         lc.start();
     };
     window.onclick = function(e) {
         if (e.target == modal) {
-            modal.style.display = "none";
+            modal.classList.remove("active");
             lc.stop();
             localStorage.clear();
         }
